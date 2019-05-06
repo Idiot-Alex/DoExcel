@@ -1,0 +1,12 @@
+/bin/
+/out/
+target/
+.DS_Store
+.DS_Store*
+/.idea/*
+/.idea/workspace.xml
+/*/target/*
+/apidoc/
+~
+~*
+*.iml
