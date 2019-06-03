@@ -1,15 +1,13 @@
 package com.hotstrip.annotation;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 单个 sheet 表的元注解
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
+@Documented
 public @interface DoSheet {
     // 字段名称
     String name();
