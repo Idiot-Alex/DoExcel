@@ -9,5 +9,5 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 public @interface DoExcel {
-    String name() default "新建工作表.xlsx";
+    String name() default "untitled.xlsx";
 }
