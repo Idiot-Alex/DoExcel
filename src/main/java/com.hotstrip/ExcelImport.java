@@ -5,10 +5,7 @@ package com.hotstrip;
 import com.hotstrip.annotation.DoSheet;
 import com.hotstrip.enums.ExcelTypeEnums;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,8 +113,8 @@ public class ExcelImport {
 				// 遍历一行的列
 				while (cellbody.hasNext()) {
 					Cell cell = cellbody.next();
-					if(cell.getCellType() == 0){ //是number类型
-						cell.setCellType(1);
+					if(cell.getCellType() == CellType.NUMERIC){ //是number类型
+						cell.setCellType(CellType.STRING);
 					}
 					// 这里得到此列的对应的标题
 					String titleString = (String) titlemap.get(k);
@@ -136,8 +133,8 @@ public class ExcelImport {
 									cell.getStringCellValue());
 						} else {
 							if (xclass.equals("class java.lang.String")) {
-								if(cell.getCellType() == 0){ //是number类型
-									cell.setCellType(1);
+								if(cell.getCellType() == CellType.NUMERIC){ //是number类型
+									cell.setCellType(CellType.STRING);
 								}
 								setMethod.invoke(tObject, cell.getStringCellValue());
 							} else if (xclass.equals("class java.util.Date")) {
