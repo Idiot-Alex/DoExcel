@@ -8,7 +8,9 @@ public class AppTest {
     private static Logger logger = LoggerFactory.getLogger(AppTest.class);
 
     public static void main(String[] args) {
-        ExcelWriter excelWriter = ExcelWriter.builder().title("test.xlsx").build();
+        ExcelWriter excelWriter = ExcelWriter.builder()
+                .title("test.xlsx")
+                .build();
         logger.info("excelWriter: {}", JSON.toJSONString(excelWriter));
     }
 }

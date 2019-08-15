@@ -1,15 +1,14 @@
 package com.hotstrip.excel;
 
+import com.hotstrip.excel.util.DoExcelUtil;
 import org.apache.poi.ss.usermodel.Sheet;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2019/7/29.
  */
 public class ExcelWriter {
     private String title;
-    private List<Sheet> sheets;
+    private Sheet sheet;
 
     public String getTitle() {
         return title;
@@ -19,39 +18,42 @@ public class ExcelWriter {
         this.title = title;
     }
 
-    public List<Sheet> getSheets() {
-        return sheets;
+    public Sheet getSheet() {
+        return sheet;
     }
 
-    public void setSheets(List<Sheet> sheets) {
-        this.sheets = sheets;
+    public void setSheet(Sheet sheet) {
+        this.sheet = sheet;
     }
 
     public static ExcelWriterBuilder builder() {
         return new ExcelWriterBuilder();
     }
 
-    public ExcelWriter(String title, List<Sheet> sheets) {
+    public ExcelWriter(String title, Sheet sheet) {
         this.title = title;
-        this.sheets = sheets;
+        this.sheet = sheet;
     }
 
     public static class ExcelWriterBuilder {
         private String title;
-        private List<Sheet> sheets;
+        private Sheet sheet;
 
         public ExcelWriterBuilder title(String title) {
             this.title = title;
             return this;
         }
 
-        public ExcelWriterBuilder sheets(List<Sheet> sheets) {
-            this.sheets = sheets;
+        public ExcelWriterBuilder sheet(Sheet sheet) {
+            this.sheet = sheet;
             return this;
         }
 
         public ExcelWriter build() {
-            return new ExcelWriter(title, sheets);
+            if (sheet == null) {
+                sheet =
+            }
+            return new ExcelWriter(title, sheet);
         }
     }
 }
