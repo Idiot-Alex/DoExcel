@@ -1,13 +1,13 @@
 package model;
 
-import com.hotstrip.annotation.DoSheet;
+import com.hotstrip.annotation.Column;
 
 public class ExcelAgent {
-    @DoSheet(name = "终端ID")
+    @Column(name = "终端ID")
     private Long agentId;
-    @DoSheet(name = "终端名称")
+    @Column(name = "终端名称")
     private String agentName;
-    @DoSheet(name = "终端编号")
+    @Column(name = "终端编号")
     private String agentCode;
 
     public Long getAgentId() {

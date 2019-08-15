@@ -30,7 +30,7 @@ public class DoExcelUtil {
      * @return
      * @throws IOException
      */
-    public static Workbook createWorkBook(ExcelTypeEnums excelTypeEnums) throws IOException {
+    public static Workbook createWorkBook(ExcelTypeEnums excelTypeEnums) {
         Workbook workbook;
         if(excelTypeEnums.equals(ExcelTypeEnums.XLSX))
             workbook = new XSSFWorkbook();

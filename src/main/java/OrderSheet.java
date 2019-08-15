@@ -1,4 +1,4 @@
-import com.hotstrip.annotation.DoSheet;
+import com.hotstrip.annotation.Column;
 
 import java.math.BigDecimal;
 
@@ -6,38 +6,38 @@ import java.math.BigDecimal;
  * Created by idiot on 2019/6/2.
  */
 public class OrderSheet {
-    @DoSheet(name = "交易时间")
+    @Column(name = "交易时间")
     private String createTime;
 
-    @DoSheet(name = "公众账号ID")
+    @Column(name = "公众账号ID")
     private String appId;
 
-    @DoSheet(name = "商户号")
+    @Column(name = "商户号")
     private String machId;
 
-    @DoSheet(name = "设备号")
+    @Column(name = "设备号")
     private String agentCode;
 
-    @DoSheet(name = "微信订单号")
+    @Column(name = "微信订单号")
     private String tradeNo;
 
-    @DoSheet(name = "商户订单号")
+    @Column(name = "商户订单号")
     private String orderId;
 
-    @DoSheet(name = "用户标识")
+    @Column(name = "用户标识")
     private String openId;
 
-    @DoSheet(name = "交易类型")
+    @Column(name = "交易类型")
     private String tradeType;
 
-    @DoSheet(name = "交易状态")
+    @Column(name = "交易状态")
     private String success;
 
-    @DoSheet(name = "应结订单金额")
+    @Column(name = "应结订单金额")
     private String priceText;
     private BigDecimal price;
 
-    @DoSheet(name = "商品名称")
+    @Column(name = "商品名称")
     private String goodsBody;
 
     public String getCreateTime() {

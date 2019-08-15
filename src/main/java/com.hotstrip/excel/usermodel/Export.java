@@ -1,7 +1,7 @@
 package com.hotstrip.excel.usermodel;
 
 
-import com.hotstrip.annotation.DoSheet;
+import com.hotstrip.annotation.Column;
 import com.hotstrip.enums.ExcelTypeEnums;
 import com.hotstrip.exception.DoExcelException;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
@@ -67,11 +67,11 @@ public class Export {
 		for (int i = 0; i < fileds.length; i++) {
 			Field field = fileds[i];
 			//判断该属性是否含有指定注解
-			if(field.isAnnotationPresent(DoSheet.class)){
+			if(field.isAnnotationPresent(Column.class)){
 				if(!"serialVersionUID".equals(field.getName()))         //排除序列化id
 					filedTypes[i] = field.getType().getSimpleName();	//获取属性类型
 			}
-			DoSheet doSheet = field.getAnnotation(DoSheet.class);
+			Column doSheet = field.getAnnotation(Column.class);
 			// 如果设置了annottion
 			if (doSheet != null) {
 				// 添加到标题

@@ -5,16 +5,16 @@ package com.hotstrip.excel;
  */
 public class DoExcel {
     // excelConfig
-    private ExcelConfig excelConfig;
+    private ExcelContext excelConfig;
 
     public DoExcel() {
     }
 
-    public ExcelConfig getExcelConfig() {
+    public ExcelContext getExcelConfig() {
         return excelConfig;
     }
 
-    public void setExcelConfig(ExcelConfig excelConfig) {
+    public void setExcelConfig(ExcelContext excelConfig) {
         this.excelConfig = excelConfig;
     }
 

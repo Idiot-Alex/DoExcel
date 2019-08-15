@@ -1,6 +1,6 @@
 package com.hotstrip;
 
-import com.hotstrip.annotation.DoSheet;
+import com.hotstrip.annotation.Column;
 
 import java.math.BigDecimal;
 
@@ -8,38 +8,38 @@ import java.math.BigDecimal;
  * Created by idiot on 2019/6/2.
  */
 public class SeestechOrderSheet {
-    @DoSheet(name = "订单id")
+    @Column(name = "订单id")
     private String orderId;
 
-    @DoSheet(name = "所属企业")
+    @Column(name = "所属企业")
     private String companyName;
 
-    @DoSheet(name = "终端名称")
+    @Column(name = "终端名称")
     private String agentName;
 
-    @DoSheet(name = "终端编号")
+    @Column(name = "终端编号")
     private String agentCode;
 
-    @DoSheet(name = "商品名称")
+    @Column(name = "商品名称")
     private String goodsBody;
 
-    @DoSheet(name = "商品code")
+    @Column(name = "商品code")
     private String goodsCode;
 
-    @DoSheet(name = "交易金额")
+    @Column(name = "交易金额")
     private String priceText;
     private BigDecimal price;
 
-    @DoSheet(name = "支付状态")
+    @Column(name = "支付状态")
     private String successText;
 
-    @DoSheet(name = "支付渠道")
+    @Column(name = "支付渠道")
     private String channelText;
 
-    @DoSheet(name = "出货状态")
+    @Column(name = "出货状态")
     private String saleStatusText;
 
-    @DoSheet(name = "创建时间")
+    @Column(name = "创建时间")
     private String createTime;
 
     public String getOrderId() {

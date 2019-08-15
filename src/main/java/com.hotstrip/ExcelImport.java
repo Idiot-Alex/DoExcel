@@ -2,7 +2,7 @@ package com.hotstrip;
 
 
 
-import com.hotstrip.annotation.DoSheet;
+import com.hotstrip.annotation.Column;
 import com.hotstrip.enums.ExcelTypeEnums;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -40,7 +40,7 @@ public class ExcelImport {
 				Field f = filed[i];
 
 				// 得到单个字段上的Annotation
-				DoSheet doSheet = f.getAnnotation(DoSheet.class);
+				Column doSheet = f.getAnnotation(Column.class);
 
 				// 如果标识了Annotationd的话
 				if (doSheet != null) {
