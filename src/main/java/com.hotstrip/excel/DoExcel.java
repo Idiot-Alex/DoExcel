@@ -18,12 +18,4 @@ public class DoExcel {
         this.excelConfig = excelConfig;
     }
 
-    /**
-     * ExcelWriter
-     */
-    public ExcelWriter getExcelWriter() {
-        return ExcelWriter.builder()
-                .title("test.xlsx")
-                .build();
-    }
 }

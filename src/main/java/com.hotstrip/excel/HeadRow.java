@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 标题行
+ */
 public class HeadRow {
     // 类
     private Class headClazz;
     // 列表头
-    private List<ColumnProperty> columnPropertyList;
+    private List<ColumnProperty> columnPropertyList = new ArrayList<ColumnProperty>();
 
     public HeadRow() {
     }

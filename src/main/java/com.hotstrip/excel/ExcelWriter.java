@@ -15,9 +15,19 @@ public class ExcelWriter {
         excelContext = new ExcelContext(outputStream, excelTypeEnums);
     }
 
+    /**
+     * 写入数据
+     * @param list
+     * @param clazz
+     * @return
+     */
     public ExcelWriter write(List list, Class clazz) {
         excelContext.addContent(list, clazz);
         return this;
     }
 
+    public ExcelWriter close() {
+        excelContext.close();
+        return this;
+    }
 }

@@ -1,7 +1,9 @@
 package model;
 
 import com.hotstrip.annotation.Column;
+import com.hotstrip.annotation.DoSheet;
 
+@DoSheet(title = "终端信息表")
 public class ExcelAgent {
     @Column(name = "终端ID")
     private Long agentId;
@@ -32,5 +34,14 @@ public class ExcelAgent {
 
     public void setAgentCode(String agentCode) {
         this.agentCode = agentCode;
+    }
+
+    @Override
+    public String toString() {
+        return "ExcelAgent{" +
+                "agentId=" + agentId +
+                ", agentName='" + agentName + '\'' +
+                ", agentCode='" + agentCode + '\'' +
+                '}';
     }
 }

@@ -46,7 +46,11 @@ public class DoExcelUtil {
      * @return
      */
     public static Sheet createSheet(Workbook workbook, String sheetTitle) {
-        return workbook.getSheet(sheetTitle != null ? sheetTitle : SHEET_TITLE);
+        Sheet sheet = workbook.getSheet(sheetTitle != null ? sheetTitle : SHEET_TITLE);
+        if (sheet == null) {
+            sheet = workbook.createSheet(sheetTitle != null ? sheetTitle : SHEET_TITLE);
+        }
+        return sheet;
     }
 
     /**
