@@ -6,7 +6,6 @@ import com.hotstrip.excel.util.Const;
 import com.hotstrip.excel.util.DoExcelUtil;
 import com.hotstrip.exception.DoExcelException;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +13,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -147,7 +144,7 @@ public class ExcelContext {
         for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
             int cellNum = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
             // 设置单元格宽度 为 0 就设置自动适应表头
-            doColumnWidth(cellNum, columnProperty.getWidth());
+            doHeadRowColumnWidth(cellNum, columnProperty, columnProperty.getName());
 
             Cell cell = row.createCell(cellNum);
             cell.setCellValue(columnProperty.getName());
@@ -155,17 +152,53 @@ public class ExcelContext {
     }
 
     /**
-     * 设置单元格宽度
+     * 设置表头行 单元格宽度
      * 为 0 就设置自动适应表头
      * 每个单元格都设置的话，会影响性能
      * @param cellNum
-     * @param width
+     * @param columnProperty
+     * @param cellValue
      */
-    private void doColumnWidth(int cellNum, Integer width) {
-        if (width == 0) {
-            this.currentSheet.autoSizeColumn(cellNum, true);
+    private void doHeadRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue) {
+        int cellValueLength = DoExcelUtil.getValueLength(cellValue);
+        int width = columnProperty.getWidth();
+        /**
+         * 判断值的真正长度
+         * 设置单元格宽度需要 n * 256 其中 n 表示字符个数
+         */
+        if (cellValueLength > width) {
+            // 设置字段单元格长度
+            columnProperty.setWidth(cellValueLength);
+            this.currentSheet.setColumnWidth(cellNum, DoExcelUtil.calcCellWidth(columnProperty.getWidth()));
         } else {
-            this.currentSheet.setColumnWidth(cellNum, width);
+            // 自动适应宽度
+            if (width == 0)
+                this.currentSheet.autoSizeColumn(cellNum, true);
+            else {
+                columnProperty.setWidth(width);
+                this.currentSheet.setColumnWidth(cellNum, DoExcelUtil.calcCellWidth(columnProperty.getWidth()));
+            }
+        }
+    }
+
+    /**
+     * 设置内容数据单元格宽度
+     * @param cellNum
+     * @param columnProperty
+     * @param cellValue
+     * @param isEndRow
+     */
+    private void doContentRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue, boolean isEndRow) {
+        // 开始的处理逻辑和表头行一样
+        int cellValueLength = DoExcelUtil.getValueLength(cellValue);
+        int width = columnProperty.getWidth();
+        if (cellValueLength > width) {
+            // 设置字段单元格长度
+            columnProperty.setWidth(cellValueLength);
+        }
+        // 如果是最后一行 设置单元格宽度
+        if (isEndRow) {
+            this.currentSheet.setColumnWidth(cellNum, DoExcelUtil.calcCellWidth(columnProperty.getWidth()));
         }
     }
 
@@ -194,30 +227,33 @@ public class ExcelContext {
                 // 非空判断
                 cellValue = cellValue == null ? "" : cellValue;
 
-                doColumnType(cell, cellValue);
+                // 处理单元格宽度
+                doContentRowColumnWidth(cellNum, columnProperty, cellValue.toString(), i == list.size() - 1);
+
+                fillCellValue(cell, cellValue);
             }
         }
     }
 
     /**
+     * 设置单元格值
      * 判断单元格数据类型
      * 数值型 又分为 整数 小数
      * 文本型 百分比数值 时间格式化 也就是字符串
      * @param cell
      * @param cellValue
      */
-    private void doColumnType(Cell cell, Object cellValue) {
-        if (cellValue instanceof Date) {
-            cellValue = DateFormat.getDateTimeInstance().format(cellValue);
-        }
+    private void fillCellValue(Cell cell, Object cellValue) {
+        // 单元格样式
         CellStyle cellStyle = this.workbook.createCellStyle();
+
+        DataFormat dataFormat = this.workbook.createDataFormat();
 
         boolean isNum = DoExcelUtil.isNum(cellValue);
         boolean isInteger = DoExcelUtil.isIntger(cellValue);
         boolean isPercent = DoExcelUtil.isPercent(cellValue);
         // 整数
         if (isNum && isPercent == false) {
-            DataFormat dataFormat = this.workbook.createDataFormat();
             // 整数不显示小数
             if (isInteger)
                 cellStyle.setDataFormat(dataFormat.getFormat("#,#0"));
@@ -227,7 +263,16 @@ public class ExcelContext {
             cell.setCellStyle(cellStyle);
             cell.setCellValue(Double.parseDouble(cellValue.toString()));
         } else {
-            cell.setCellValue(cellValue.toString());
+            logger.info(cellValue.toString());
+            // 日期时间格式
+            if (cellValue instanceof Date) {
+                cellStyle.setDataFormat(dataFormat.getFormat(Const.YMDHMS));
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue((Date) cellValue);
+            } else {
+                // 字符串
+                cell.setCellValue(cellValue.toString());
+            }
         }
     }
 

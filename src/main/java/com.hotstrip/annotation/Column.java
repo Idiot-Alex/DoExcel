@@ -11,7 +11,4 @@ import java.lang.annotation.*;
 public @interface Column {
     // 字段名称
     String name();
-
-    // 宽度
-    int width() default 0;
 }

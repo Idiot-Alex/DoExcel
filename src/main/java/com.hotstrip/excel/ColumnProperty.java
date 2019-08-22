@@ -10,8 +10,8 @@ public class ColumnProperty {
     private String name;
     // 字段 get 方法
     private Method getMethod;
-    // 单元格宽度
-    private Integer width;
+    // 字段所在单元格最大宽度
+    private int width;
 
     public Field getField() {
         return field;
@@ -37,11 +37,11 @@ public class ColumnProperty {
         this.getMethod = getMethod;
     }
 
-    public Integer getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 }

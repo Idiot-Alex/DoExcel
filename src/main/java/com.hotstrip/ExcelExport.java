@@ -79,7 +79,7 @@ public class ExcelExport{
 					// 添加到标题
 					exportFieldTitle.add(doSheet.name());
 					// 添加标题的列宽
-					exportFieldWidth.add(doSheet.width());
+					exportFieldWidth.add(15);
 					// 添加到需要导出的字段的方法
 					String fieldname = field.getName();
 					// System.out.println(i+"列宽"+excel.exportName()+" "+excel.exportFieldWidth());

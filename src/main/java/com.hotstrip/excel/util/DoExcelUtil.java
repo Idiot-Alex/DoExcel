@@ -90,4 +90,33 @@ public class DoExcelUtil {
     public static boolean isPercent(Object cellValue) {
         return cellValue.toString().contains("%");
     }
+
+    /**
+     * 计算字符串长度
+     * 1 个中文占 2 个字符位置
+     * @param value
+     * @return
+     */
+    public static int getValueLength(String value) {
+        int valueLength = 0;
+        for (int i = 0; i < value.length(); i++) {
+            String temp = value.substring(i, i + 1);
+            if (temp.matches("[\u4e00-\u9fa5]")) {
+                valueLength += 2;
+            } else {
+                valueLength += 1;
+            }
+        }
+        return valueLength;
+    }
+
+    /**
+     * 根据字符长度计算单元格宽度
+     * 这里实现不够精确
+     * 具体参考下面链接 如何计算单元格宽度
+     * https://blog.csdn.net/feg545/article/details/38661989
+     */
+    public static int calcCellWidth(int valueLength) {
+        return (valueLength + 3) * Const.CELL_WIDTH;
+    }
 }

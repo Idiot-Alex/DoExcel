@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AppTest {
@@ -23,8 +24,9 @@ public class AppTest {
             excelAgent.setAgentCode("code" + i * 9999);
             excelAgent.setAgentName("name" + i * 10000);
             excelAgent.setAgentId(i * 1000L);
-            excelAgent.setTwo(i * 1.1);
+            excelAgent.setTwo(i * 10);
             excelAgent.setThree(BigDecimal.valueOf(i).multiply(BigDecimal.valueOf(10.1)));
+            excelAgent.setCreateTime(new Date());
             list.add(excelAgent);
         }
 

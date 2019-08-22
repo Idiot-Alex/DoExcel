@@ -40,7 +40,6 @@ public class HeadRow {
                 columnProperty.setName(column.name());
                 columnProperty.setField(field);
                 columnProperty.setGetMethod(getFieldMethod(clazz, field));
-                columnProperty.setWidth(column.width() * 256);
             }
             // 过滤掉没有注解的字段
             if (columnProperty != null) {

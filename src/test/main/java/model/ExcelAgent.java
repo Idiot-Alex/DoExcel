@@ -4,21 +4,24 @@ import com.hotstrip.annotation.Column;
 import com.hotstrip.annotation.DoSheet;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @DoSheet(title = "终端信息表")
 public class ExcelAgent {
-    @Column(name = "终端ID", width = 8)
+    @Column(name = "终端ID")
     private Long agentId;
-    @Column(name = "终端名称")
+    @Column(name = "名称")
     private String agentName;
     @Column(name = "终端编号")
     private String agentCode;
     @Column(name = "one")
     private boolean one;
     @Column(name = "two")
-    private Double two;
+    private Integer two;
     @Column(name = "three")
     private BigDecimal three;
+    @Column(name = "创建时间")
+    private Date createTime;
 
     public Long getAgentId() {
         return agentId;
@@ -52,11 +55,11 @@ public class ExcelAgent {
         this.one = one;
     }
 
-    public Double getTwo() {
+    public Integer getTwo() {
         return two;
     }
 
-    public void setTwo(Double two) {
+    public void setTwo(Integer two) {
         this.two = two;
     }
 
@@ -66,6 +69,14 @@ public class ExcelAgent {
 
     public void setThree(BigDecimal three) {
         this.three = three;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
