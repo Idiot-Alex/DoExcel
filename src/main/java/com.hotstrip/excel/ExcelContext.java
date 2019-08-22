@@ -240,6 +240,7 @@ public class ExcelContext {
      * 判断单元格数据类型
      * 数值型 又分为 整数 小数
      * 文本型 百分比数值 时间格式化 也就是字符串
+     * 日期时间型 需要格式化字符串
      * @param cell
      * @param cellValue
      */
@@ -263,8 +264,7 @@ public class ExcelContext {
             cell.setCellStyle(cellStyle);
             cell.setCellValue(Double.parseDouble(cellValue.toString()));
         } else {
-            logger.info(cellValue.toString());
-            // 日期时间格式
+            // 日期时间格式 JDK 1.8 之后的日期格式暂时没实现
             if (cellValue instanceof Date) {
                 cellStyle.setDataFormat(dataFormat.getFormat(Const.YMDHMS));
                 cell.setCellStyle(cellStyle);
