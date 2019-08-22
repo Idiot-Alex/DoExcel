@@ -13,5 +13,5 @@ public @interface Column {
     String name();
 
     // 宽度
-    int width() default 15;
+    int width() default 0;
 }

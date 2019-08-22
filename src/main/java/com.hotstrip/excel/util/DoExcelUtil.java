@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 
 /**
  * poi 工作薄 相关工具类
@@ -61,5 +62,32 @@ public class DoExcelUtil {
      */
     public static Row createRow(Sheet sheet, int rowNum) {
         return sheet.createRow(rowNum);
+    }
+
+    /**
+     * 是否是数字
+     * @param cellValue
+     * @return
+     */
+    public static boolean isNum(Object cellValue) {
+        return cellValue.toString().matches("^(-?\\d+)(\\.\\d+)?$");
+    }
+
+    /**
+     * 是否是整数
+     * @param cellValue
+     * @return
+     */
+    public static boolean isIntger(Object cellValue) {
+        return cellValue.toString().matches("^[-\\+]?[\\d]*$");
+    }
+
+    /**
+     * 是否是百分数
+     * @param cellValue
+     * @return
+     */
+    public static boolean isPercent(Object cellValue) {
+        return cellValue.toString().contains("%");
     }
 }

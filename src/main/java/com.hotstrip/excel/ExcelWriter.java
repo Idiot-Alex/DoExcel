@@ -26,6 +26,10 @@ public class ExcelWriter {
         return this;
     }
 
+    /**
+     * 完成写入文件
+     * @return
+     */
     public ExcelWriter close() {
         excelContext.close();
         return this;
