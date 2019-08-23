@@ -362,6 +362,7 @@ public class ExcelContext {
         try {
             this.workbook.write(this.outputStream);
             this.workbook.close();
+            this.outputStream.close();
         } catch (IOException e) {
             throw new DoExcelException("IO Exception for close workbook", e);
         }
