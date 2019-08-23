@@ -1,5 +1,7 @@
 package com.hotstrip.annotation;
 
+import com.hotstrip.excel.util.Const;
+
 import java.lang.annotation.*;
 
 /**
@@ -11,4 +13,6 @@ import java.lang.annotation.*;
 public @interface Column {
     // 字段名称
     String name();
+    // 日期时间类型需要格式化
+    String format() default Const.YMDHMS;
 }

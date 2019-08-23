@@ -4,6 +4,8 @@ import com.hotstrip.enums.ExcelTypeEnums;
 
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Created by Administrator on 2019/7/29.
@@ -32,6 +34,16 @@ public class ExcelWriter {
      */
     public ExcelWriter close() {
         excelContext.close();
+        return this;
+    }
+
+    /**
+     * 设置国际化资源
+     * @param locale
+     * @return
+     */
+    public ExcelWriter locale(Locale locale) {
+        excelContext.setLocale(locale);
         return this;
     }
 }

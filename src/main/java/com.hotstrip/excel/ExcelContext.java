@@ -11,12 +11,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Excel config
@@ -24,6 +22,7 @@ import java.util.ResourceBundle;
  */
 public class ExcelContext {
     private static Logger logger = LoggerFactory.getLogger(ExcelContext.class);
+
     // locale
     private Locale locale;
     // resourceBundle
@@ -52,7 +51,6 @@ public class ExcelContext {
         this.outputStream = outputStream;
     }
 
-
     public Locale getLocale() {
         return locale;
     }
@@ -65,6 +63,7 @@ public class ExcelContext {
         return resourceBundle;
     }
 
+    @Deprecated
     public void setResourceBundle(ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
     }
@@ -143,11 +142,25 @@ public class ExcelContext {
         Row row = getNextRow();
         for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
             int cellNum = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
+
+            String cellValue = columnProperty.getName();
+
+            // 是否需要国际化
+            if (this.resourceBundle != null) {
+                try {
+                    cellValue = new String(this.resourceBundle.getString(cellValue).getBytes("ISO-8859-1"), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+
+                } catch (MissingResourceException e) {
+                    logger.warn("the key [{}] is not match value", cellValue);
+                }
+            }
+
             // 设置单元格宽度 为 0 就设置自动适应表头
-            doHeadRowColumnWidth(cellNum, columnProperty, columnProperty.getName());
+            doHeadRowColumnWidth(cellNum, columnProperty, cellValue);
 
             Cell cell = row.createCell(cellNum);
-            cell.setCellValue(columnProperty.getName());
+            cell.setCellValue(cellValue);
         }
     }
 
@@ -295,9 +308,24 @@ public class ExcelContext {
         // 获取类上的注解
         DoSheet doSheet = (DoSheet) clazz.getAnnotation(DoSheet.class);
 
+        // 设置表标题
         String title = doSheet != null ? doSheet.title() : Const.UNTITLED;
-
         this.currentSheet = DoExcelUtil.createSheet(this.workbook, title);
+
+        // 设置国际化资源
+        boolean localeFlag = true;
+        if (this.locale == null) {
+            logger.warn("the locale is null, cannot config resourceBundle");
+            localeFlag = false;
+        }
+        if (doSheet.localeResource().length() < 1) {
+            logger.warn("the localeResource is invalid, please check it, and value is [{}]", doSheet.localeResource());
+            localeFlag = false;
+        }
+        if (localeFlag) {
+            ResourceBundle resourceBundle = ResourceBundle.getBundle(doSheet.localeResource(), this.locale);
+            this.resourceBundle = resourceBundle;
+        }
     }
 
     /**

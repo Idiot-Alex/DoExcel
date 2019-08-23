@@ -1,5 +1,6 @@
 import com.alibaba.fastjson.JSON;
 import com.hotstrip.enums.ExcelTypeEnums;
+import com.hotstrip.enums.LocaleEnums;
 import com.hotstrip.excel.ExcelWriter;
 import model.ExcelAgent;
 import org.slf4j.Logger;
@@ -8,9 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class AppTest {
 
@@ -32,10 +31,13 @@ public class AppTest {
 
         long startTime = System.currentTimeMillis();
 
+        Locale locale = LocaleEnums.getLocaleByValue("zh_cn");
+
         FileOutputStream fileOutputStream = new FileOutputStream("/Users/zhangxin/Desktop/test.xlsx");
         ExcelWriter excelWriter = new ExcelWriter(fileOutputStream, ExcelTypeEnums.XLSX);
 
-        excelWriter.write(list, ExcelAgent.class)
+        excelWriter.locale(locale)
+                .write(list, ExcelAgent.class)
                 .close();
 
         long endTime = System.currentTimeMillis();

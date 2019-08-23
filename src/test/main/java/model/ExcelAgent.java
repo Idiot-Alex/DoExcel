@@ -6,13 +6,13 @@ import com.hotstrip.annotation.DoSheet;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@DoSheet(title = "终端信息表")
+@DoSheet(title = "终端信息表", localeResource = "locales/excel_agent")
 public class ExcelAgent {
-    @Column(name = "终端ID")
+    @Column(name = "agentId")
     private Long agentId;
-    @Column(name = "名称")
+    @Column(name = "agentName")
     private String agentName;
-    @Column(name = "终端编号")
+    @Column(name = "agentCode")
     private String agentCode;
     @Column(name = "one")
     private boolean one;
@@ -20,7 +20,7 @@ public class ExcelAgent {
     private Integer two;
     @Column(name = "three")
     private BigDecimal three;
-    @Column(name = "创建时间")
+    @Column(name = "createTime")
     private Date createTime;
 
     public Long getAgentId() {

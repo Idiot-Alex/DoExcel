@@ -9,5 +9,8 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Documented
 public @interface DoSheet {
+    // 标题
     String title() default "Untitled";
+    // 国际化资源地址
+    String localeResource() default "";
 }
