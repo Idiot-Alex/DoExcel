@@ -1,5 +1,7 @@
 package com.hotstrip.excel;
 
+import org.apache.poi.ss.usermodel.CellStyle;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -12,6 +14,8 @@ public class ColumnProperty {
     private Method getMethod;
     // 字段所在单元格最大宽度
     private int width;
+    // 单元格样式
+    private CellStyle cellStyle;
 
     public Field getField() {
         return field;
@@ -43,5 +47,13 @@ public class ColumnProperty {
 
     public void setWidth(int width) {
         this.width = width;
+    }
+
+    public CellStyle getCellStyle() {
+        return cellStyle;
+    }
+
+    public void setCellStyle(CellStyle cellStyle) {
+        this.cellStyle = cellStyle;
     }
 }

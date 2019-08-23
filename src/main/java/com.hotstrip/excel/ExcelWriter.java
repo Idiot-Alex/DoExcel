@@ -46,4 +46,14 @@ public class ExcelWriter {
         excelContext.setLocale(locale);
         return this;
     }
+
+    /**
+     * 单独写入行数据
+     * @param list
+     * @return
+     */
+    public ExcelWriter writeRow(List<Object> list) {
+        excelContext.addRow(list);
+        return this;
+    }
 }

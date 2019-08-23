@@ -223,6 +223,10 @@ public class ExcelContext {
         for (int i = 0; i < list.size(); i++) {
             Row row = getNextRow();
             for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
+                // 如果单元格样式没有设置
+                if (columnProperty.getCellStyle() == null) {
+                    columnProperty.setCellStyle(this.workbook.createCellStyle());
+                }
                 Object cellValue = new String();
                 Method getMethod = columnProperty.getGetMethod();
                 if (getMethod != null) {
@@ -243,7 +247,7 @@ public class ExcelContext {
                 // 处理单元格宽度
                 doContentRowColumnWidth(cellNum, columnProperty, cellValue.toString(), i == list.size() - 1);
 
-                fillCellValue(cell, cellValue);
+                fillCellValue(cell, columnProperty.getCellStyle(), cellValue);
             }
         }
     }
@@ -255,12 +259,11 @@ public class ExcelContext {
      * 文本型 百分比数值 时间格式化 也就是字符串
      * 日期时间型 需要格式化字符串
      * @param cell
+     * @param cellStyle
      * @param cellValue
      */
-    private void fillCellValue(Cell cell, Object cellValue) {
-        // 单元格样式
-        CellStyle cellStyle = this.workbook.createCellStyle();
-
+    private void fillCellValue(Cell cell, CellStyle cellStyle, Object cellValue) {
+        // 格式化
         DataFormat dataFormat = this.workbook.createDataFormat();
 
         boolean isNum = DoExcelUtil.isNum(cellValue);
@@ -270,9 +273,9 @@ public class ExcelContext {
         if (isNum && isPercent == false) {
             // 整数不显示小数
             if (isInteger)
-                cellStyle.setDataFormat(dataFormat.getFormat("#,#0"));
+                cellStyle.setDataFormat(dataFormat.getFormat("0"));
             else
-                cellStyle.setDataFormat(dataFormat.getFormat("#,##0.00"));
+                cellStyle.setDataFormat(dataFormat.getFormat("0.00"));
             // 设置样式
             cell.setCellStyle(cellStyle);
             cell.setCellValue(Double.parseDouble(cellValue.toString()));
@@ -284,6 +287,8 @@ public class ExcelContext {
                 cell.setCellValue((Date) cellValue);
             } else {
                 // 字符串
+                cellStyle.setDataFormat(dataFormat.getFormat("@"));
+                cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellValue.toString());
             }
         }
@@ -329,6 +334,27 @@ public class ExcelContext {
     }
 
     /**
+     * 添加行数据
+     * @param list
+     */
+    public void addRow(List<Object> list) {
+        // 单元格样式
+        CellStyle cellStyle = this.workbook.createCellStyle();
+
+        Row row = getNextRow();
+        // 遍历数据
+        for (int i = 0; i < list.size(); i++) {
+            int cellNum = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
+            Cell cell = row.createCell(cellNum);
+
+            // 非空判断
+            Object cellValue = list.get(i) == null ? "" : list.get(i);
+
+            fillCellValue(cell, cellStyle, cellValue);
+        }
+    }
+
+    /**
      * 完成写入文件
      * 关闭流
      */
@@ -340,4 +366,5 @@ public class ExcelContext {
             throw new DoExcelException("IO Exception for close workbook", e);
         }
     }
+
 }
