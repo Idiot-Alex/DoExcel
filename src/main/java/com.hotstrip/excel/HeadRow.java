@@ -1,14 +1,13 @@
 package com.hotstrip.excel;
 
+import com.alibaba.fastjson.JSON;
 import com.hotstrip.annotation.Column;
+import com.hotstrip.annotation.ColumnEnum;
 import com.hotstrip.excel.util.Const;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 标题行
@@ -41,6 +40,17 @@ public class HeadRow {
                 columnProperty.setName(column.name());
                 columnProperty.setField(field);
                 columnProperty.setGetMethod(getFieldMethod(clazz, field));
+
+                // 设置重写字段值集合
+                if (column.columnEnums().length > 0) {
+                    List<HashMap> hashMapList = new ArrayList<HashMap>();
+                    for (ColumnEnum columnEnum : column.columnEnums()) {
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        map.put(columnEnum.code(), columnEnum.value());
+                        hashMapList.add(map);
+                    }
+                    columnProperty.setRewritePropertyList(hashMapList);
+                }
             }
             // 过滤掉没有注解的字段
             if (columnProperty != null) {

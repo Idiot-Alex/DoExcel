@@ -1,6 +1,7 @@
 package model;
 
 import com.hotstrip.annotation.Column;
+import com.hotstrip.annotation.ColumnEnum;
 import com.hotstrip.annotation.DoSheet;
 
 import java.math.BigDecimal;
@@ -16,7 +17,7 @@ public class ExcelAgent {
     private String agentCode;
     @Column(name = "one")
     private boolean one;
-    @Column(name = "two")
+    @Column(name = "two", columnEnums = { @ColumnEnum(code = "0", value = "zero"), @ColumnEnum(code = "1", value = "value 1")})
     private Integer two;
     @Column(name = "three")
     private BigDecimal three;

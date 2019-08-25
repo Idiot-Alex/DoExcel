@@ -244,12 +244,36 @@ public class ExcelContext {
                 // 非空判断
                 cellValue = cellValue == null ? "" : cellValue;
 
+                // 如果当前属性重写字段值集合大小 > 0
+                if (columnProperty.getRewritePropertyList().size() > 0) {
+                    cellValue = doRewriteColumnValue(columnProperty, cellValue);
+                }
+
                 // 处理单元格宽度
                 doContentRowColumnWidth(cellNum, columnProperty, cellValue.toString(), i == list.size() - 1);
 
                 fillCellValue(cell, columnProperty.getCellStyle(), cellValue);
             }
         }
+    }
+
+    /**
+     * 重写字段值
+     * @param columnProperty
+     * @param cellValue
+     * @return
+     */
+    private Object doRewriteColumnValue(ColumnProperty columnProperty, Object cellValue) {
+        Object tempValue = cellValue;
+        // 遍历集合匹配数据
+        for (HashMap map : columnProperty.getRewritePropertyList()) {
+            // 需要用字符串匹配
+            if (map.containsKey(cellValue.toString())) {
+                tempValue = map.get(cellValue.toString());
+                break;
+            }
+        }
+        return tempValue;
     }
 
     /**

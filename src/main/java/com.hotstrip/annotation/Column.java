@@ -11,4 +11,12 @@ import java.lang.annotation.*;
 public @interface Column {
     // 字段名称
     String name();
+
+    /**
+     * 重写字段数组注解
+     * 比如某个字段 status 取值 {0: 无效, 1: 有效}
+     * 最终导出数据用户希望看到的是字符串而非数字
+     * @return
+     */
+    ColumnEnum[] columnEnums() default {};
 }

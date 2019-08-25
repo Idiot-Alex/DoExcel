@@ -4,6 +4,9 @@ import org.apache.poi.ss.usermodel.CellStyle;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ColumnProperty {
     // 字段
@@ -16,6 +19,8 @@ public class ColumnProperty {
     private int width;
     // 单元格样式
     private CellStyle cellStyle;
+    // 属性替换对象
+    private List<HashMap> rewritePropertyList = new ArrayList<HashMap>();
 
     public Field getField() {
         return field;
@@ -55,5 +60,13 @@ public class ColumnProperty {
 
     public void setCellStyle(CellStyle cellStyle) {
         this.cellStyle = cellStyle;
+    }
+
+    public List<HashMap> getRewritePropertyList() {
+        return rewritePropertyList;
+    }
+
+    public void setRewritePropertyList(List<HashMap> rewritePropertyList) {
+        this.rewritePropertyList = rewritePropertyList;
     }
 }
