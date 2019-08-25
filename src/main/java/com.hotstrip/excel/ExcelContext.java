@@ -143,18 +143,8 @@ public class ExcelContext {
         for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
             int cellNum = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
 
-            String cellValue = columnProperty.getName();
-
-            // 是否需要国际化
-            if (this.resourceBundle != null) {
-                try {
-                    cellValue = new String(this.resourceBundle.getString(cellValue).getBytes("ISO-8859-1"), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-
-                } catch (MissingResourceException e) {
-                    logger.warn("the key [{}] is not match value", cellValue);
-                }
-            }
+            // 获取国际化之后的值
+            String cellValue = handleResourceBundle(columnProperty.getName());
 
             // 设置单元格宽度 为 0 就设置自动适应表头
             doHeadRowColumnWidth(cellNum, columnProperty, cellValue);
@@ -162,6 +152,25 @@ public class ExcelContext {
             Cell cell = row.createCell(cellNum);
             cell.setCellValue(cellValue);
         }
+    }
+
+    /**
+     * 处理国际化
+     * @param value
+     * @return
+     */
+    private String handleResourceBundle(String value) {
+        // 是否需要国际化
+        if (this.resourceBundle != null) {
+            try {
+                return new String(this.resourceBundle.getString(value).getBytes("ISO-8859-1"), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+
+            } catch (MissingResourceException e) {
+                logger.warn("the key [{}] is not match value", value);
+            }
+        }
+        return value;
     }
 
     /**
@@ -269,7 +278,7 @@ public class ExcelContext {
         for (HashMap map : columnProperty.getRewritePropertyList()) {
             // 需要用字符串匹配
             if (map.containsKey(cellValue.toString())) {
-                tempValue = map.get(cellValue.toString());
+                tempValue = handleResourceBundle((String) map.get(cellValue.toString()));
                 break;
             }
         }
