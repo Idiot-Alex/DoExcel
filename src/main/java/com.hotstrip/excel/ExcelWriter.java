@@ -5,7 +5,6 @@ import com.hotstrip.enums.ExcelTypeEnums;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Created by Administrator on 2019/7/29.
@@ -48,12 +47,12 @@ public class ExcelWriter {
     }
 
     /**
-     * 单独写入行数据
+     * 单独写入行数据 支持国际化
      * @param list
      * @return
      */
     public ExcelWriter writeRow(List<Object> list) {
-        excelContext.addRow(list);
+        excelContext.addRow(list, true);
         return this;
     }
 }

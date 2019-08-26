@@ -346,10 +346,6 @@ public class ExcelContext {
         // 获取类上的注解
         DoSheet doSheet = (DoSheet) clazz.getAnnotation(DoSheet.class);
 
-        // 设置表标题
-        String title = doSheet != null ? doSheet.title() : Const.UNTITLED;
-        this.currentSheet = DoExcelUtil.createSheet(this.workbook, title);
-
         // 设置国际化资源
         boolean localeFlag = true;
         if (this.locale == null) {
@@ -364,13 +360,18 @@ public class ExcelContext {
             ResourceBundle resourceBundle = ResourceBundle.getBundle(doSheet.localeResource(), this.locale);
             this.resourceBundle = resourceBundle;
         }
+
+        // 设置表标题
+        String title = doSheet != null ? doSheet.title() : Const.UNTITLED;
+        this.currentSheet = DoExcelUtil.createSheet(this.workbook, handleResourceBundle(title));
     }
 
     /**
      * 添加行数据
      * @param list
+     * @param localeFlag 是否需要国际化
      */
-    public void addRow(List<Object> list) {
+    public void addRow(List<Object> list, boolean localeFlag) {
         // 单元格样式
         CellStyle cellStyle = this.workbook.createCellStyle();
 
@@ -382,6 +383,11 @@ public class ExcelContext {
 
             // 非空判断
             Object cellValue = list.get(i) == null ? "" : list.get(i);
+
+            // 是否需要国际化
+            if (localeFlag && cellValue instanceof String) {
+                cellValue = handleResourceBundle(cellValue.toString());
+            }
 
             fillCellValue(cell, cellStyle, cellValue);
         }
