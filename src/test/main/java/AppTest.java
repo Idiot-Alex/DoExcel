@@ -41,7 +41,6 @@ public class AppTest {
 
         row1.add("整数总计");
         row1.add(total);
-        row1.add(new Date());
 
         row2.add("小数总计");
         row2.add(total1);
@@ -53,7 +52,7 @@ public class AppTest {
 
         excelWriter.locale(locale)
                 .write(list, ExcelAgent.class)
-                .writeRow(new ArrayList<Object>())
+                .writeRow(new ArrayList())
                 .writeRow(row1)
                 .writeRow(row2)
                 .close();
