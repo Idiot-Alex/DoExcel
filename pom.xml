@@ -4,7 +4,7 @@
 
     <groupId>com.idiotalex</groupId>
     <artifactId>excel</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <name>doExcel</name>
@@ -168,7 +168,7 @@
         <connection>scm:git:https://gitee.com/hotstrip/DoExcel.git</connection>
         <developerConnection>scm:git:https://gitee.com/hotstrip/DoExcel.git</developerConnection>
         <url>https://gitee.com/hotstrip/DoExcel</url>
-      <tag>HEAD</tag>
+      <tag>excel-1.1</tag>
   </scm>
 
     <developers>
