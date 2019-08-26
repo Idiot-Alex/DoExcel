@@ -147,8 +147,8 @@
     </licenses>
 
     <scm>
-        <connection>https://gitee.com/hotstrip/DoExcel.git</connection>
-        <developerConnection>https://gitee.com/hotstrip/DoExcel.git</developerConnection>
+        <connection>scm:git:https://gitee.com/hotstrip/DoExcel.git</connection>
+        <developerConnection>scm:git:https://gitee.com/hotstrip/DoExcel.git</developerConnection>
         <url>https://gitee.com/hotstrip/DoExcel</url>
     </scm>
 
