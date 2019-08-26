@@ -347,20 +347,21 @@ public class ExcelContext {
         DoSheet doSheet = (DoSheet) clazz.getAnnotation(DoSheet.class);
 
         // 设置国际化资源
-        boolean localeFlag = true;
-        if (this.locale == null) {
-            logger.warn("the locale is null, cannot config resourceBundle");
-            localeFlag = false;
+        if (doSheet != null) {
+            boolean localeFlag = true;
+            if (this.locale == null) {
+                logger.warn("the locale is null, cannot config resourceBundle");
+                localeFlag = false;
+            }
+            if (doSheet.localeResource().length() < 1) {
+                logger.warn("the localeResource is invalid, please check it, and value is [{}]", doSheet.localeResource());
+                localeFlag = false;
+            }
+            if (localeFlag) {
+                ResourceBundle resourceBundle = ResourceBundle.getBundle(doSheet.localeResource(), this.locale);
+                this.resourceBundle = resourceBundle;
+            }
         }
-        if (doSheet.localeResource().length() < 1) {
-            logger.warn("the localeResource is invalid, please check it, and value is [{}]", doSheet.localeResource());
-            localeFlag = false;
-        }
-        if (localeFlag) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle(doSheet.localeResource(), this.locale);
-            this.resourceBundle = resourceBundle;
-        }
-
         // 设置表标题
         String title = doSheet != null ? doSheet.title() : Const.UNTITLED;
         this.currentSheet = DoExcelUtil.createSheet(this.workbook, handleResourceBundle(title));
