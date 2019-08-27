@@ -18,6 +18,12 @@
         <logback.version>1.2.3</logback.version>
     </properties>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+
     <dependencies>
         <!--logback-->
         <dependency>
@@ -54,7 +60,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -90,7 +96,7 @@
             </activation>
             <build>
                 <plugins>
-                    <!-- source插件,打包源码 -->
+                    &lt;!&ndash; source插件,打包源码 &ndash;&gt;
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -104,7 +110,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!-- Javadoc -->
+                    &lt;!&ndash; Javadoc &ndash;&gt;
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
@@ -132,7 +138,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--Nexus Staging Maven插件是将组件部署到OSSRH并将其发布到Central Repository的推荐方法-->
+                    &lt;!&ndash;Nexus Staging Maven插件是将组件部署到OSSRH并将其发布到Central Repository的推荐方法&ndash;&gt;
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -147,7 +153,7 @@
                 </plugins>
             </build>
         </profile>
-    </profiles>
+    </profiles>-->
 
     <distributionManagement>
         <!-- Repository for snapshots -->
