@@ -71,6 +71,7 @@
         <connection>scm:git:https://gitee.com/hotstrip/DoExcel.git</connection>
         <developerConnection>scm:git:https://gitee.com/hotstrip/DoExcel.git</developerConnection>
         <url>https://gitee.com/hotstrip/DoExcel</url>
+        <tag>master</tag>
   </scm>
 
     <developers>

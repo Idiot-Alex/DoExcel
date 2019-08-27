@@ -1,13 +1,11 @@
-package com.hotstrip.excel.util;
+package com.hotstrip.DoExcel.excel.util;
 
-import com.hotstrip.enums.ExcelTypeEnums;
+import com.hotstrip.DoExcel.enums.ExcelTypeEnums;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.IOException;
 
 /**
  * poi 工作薄 相关工具类
@@ -24,9 +22,8 @@ public class DoExcelUtil {
 
     /**
      * 创建一个 工作薄
-     * @param excelTypeEnums
-     * @return
-     * @throws IOException
+     * @param excelTypeEnums 枚举
+     * @return org.apache.poi.ss.usermodel.Workbook 工作薄
      */
     public static Workbook createWorkBook(ExcelTypeEnums excelTypeEnums) {
         Workbook workbook;
@@ -39,9 +36,9 @@ public class DoExcelUtil {
 
     /**
      * 创建 工作表
-     * @param workbook
-     * @param sheetTitle
-     * @return
+     * @param workbook org.apache.poi.ss.usermodel.Workbook
+     * @param sheetTitle String
+     * @return org.apache.poi.ss.usermodel.Sheet
      */
     public static Sheet createSheet(Workbook workbook, String sheetTitle) {
         Sheet sheet = workbook.getSheet(sheetTitle != null ? sheetTitle : SHEET_TITLE);
@@ -53,9 +50,9 @@ public class DoExcelUtil {
 
     /**
      * 创建单元行
-     * @param sheet
-     * @param rowNum
-     * @return
+     * @param sheet org.apache.poi.ss.usermodel.Sheet
+     * @param rowNum int
+     * @return org.apache.poi.ss.usermodel.Row
      */
     public static Row createRow(Sheet sheet, int rowNum) {
         return sheet.createRow(rowNum);
@@ -63,8 +60,8 @@ public class DoExcelUtil {
 
     /**
      * 是否是数字
-     * @param cellValue
-     * @return
+     * @param cellValue Object
+     * @return boolean
      */
     public static boolean isNum(Object cellValue) {
         return cellValue.toString().matches("^(-?\\d+)(\\.\\d+)?$");
@@ -72,8 +69,8 @@ public class DoExcelUtil {
 
     /**
      * 是否是整数
-     * @param cellValue
-     * @return
+     * @param cellValue Object
+     * @return boolean
      */
     public static boolean isIntger(Object cellValue) {
         return cellValue.toString().matches("^[-\\+]?[\\d]*$");
@@ -81,8 +78,8 @@ public class DoExcelUtil {
 
     /**
      * 是否是百分数
-     * @param cellValue
-     * @return
+     * @param cellValue Object
+     * @return boolean
      */
     public static boolean isPercent(Object cellValue) {
         return cellValue.toString().contains("%");
@@ -91,8 +88,8 @@ public class DoExcelUtil {
     /**
      * 计算字符串长度
      * 1 个中文占 2 个字符位置
-     * @param value
-     * @return
+     * @param value String
+     * @return int
      */
     public static int getValueLength(String value) {
         int valueLength = 0;
@@ -112,6 +109,8 @@ public class DoExcelUtil {
      * 这里实现不够精确
      * 具体参考下面链接 如何计算单元格宽度
      * https://blog.csdn.net/feg545/article/details/38661989
+     * @param valueLength 变量长度
+     * @return int
      */
     public static int calcCellWidth(int valueLength) {
         return (valueLength + 3) * Const.CELL_WIDTH;

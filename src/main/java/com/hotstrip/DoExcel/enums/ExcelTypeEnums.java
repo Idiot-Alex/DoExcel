@@ -1,4 +1,4 @@
-package com.hotstrip.enums;
+package com.hotstrip.DoExcel.enums;
 
 public enum ExcelTypeEnums {
     XLS,

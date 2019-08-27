@@ -1,6 +1,6 @@
-package com.hotstrip;
+package com.hotstrip.DoExcel;
 
-import com.hotstrip.annotation.Column;
+import com.hotstrip.DoExcel.annotation.Column;
 
 import java.math.BigDecimal;
 

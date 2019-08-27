@@ -1,10 +1,10 @@
-package com.hotstrip.excel;
+package com.hotstrip.DoExcel.excel;
 
-import com.hotstrip.annotation.DoSheet;
-import com.hotstrip.enums.ExcelTypeEnums;
-import com.hotstrip.excel.util.Const;
-import com.hotstrip.excel.util.DoExcelUtil;
-import com.hotstrip.exception.DoExcelException;
+import com.hotstrip.DoExcel.annotation.DoSheet;
+import com.hotstrip.DoExcel.enums.ExcelTypeEnums;
+import com.hotstrip.DoExcel.excel.util.Const;
+import com.hotstrip.DoExcel.excel.util.DoExcelUtil;
+import com.hotstrip.DoExcel.exception.DoExcelException;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class ExcelContext {
     private ExcelTypeEnums excelTypeEnums;
 
     // 表头
-    com.hotstrip.excel.HeadRow headRow;
+    HeadRow headRow;
 
     public ExcelContext(ExcelTypeEnums excelTypeEnums) {
         this.excelTypeEnums = excelTypeEnums;
@@ -108,18 +108,18 @@ public class ExcelContext {
         this.excelTypeEnums = excelTypeEnums;
     }
 
-    public com.hotstrip.excel.HeadRow getHeadRow() {
+    public HeadRow getHeadRow() {
         return headRow;
     }
 
-    public void setHeadRow(com.hotstrip.excel.HeadRow headRow) {
+    public void setHeadRow(HeadRow headRow) {
         this.headRow = headRow;
     }
 
     /**
      * 添加数据
-     * @param list
-     * @param clazz
+     * @param list java.util.List
+     * @param clazz Class
      */
     public void addContent(List list, Class clazz) {
         // 添加 Sheet
@@ -137,10 +137,10 @@ public class ExcelContext {
      * @param clazz
      */
     private void addHeadRow(Class clazz){
-        this.headRow = new com.hotstrip.excel.HeadRow(clazz);
+        this.headRow = new HeadRow(clazz);
 
         Row row = getNextRow();
-        for (com.hotstrip.excel.ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
+        for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
             int cellNum = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
 
             // 获取国际化之后的值
@@ -181,7 +181,7 @@ public class ExcelContext {
      * @param columnProperty
      * @param cellValue
      */
-    private void doHeadRowColumnWidth(int cellNum, com.hotstrip.excel.ColumnProperty columnProperty, String cellValue) {
+    private void doHeadRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue) {
         int cellValueLength = DoExcelUtil.getValueLength(cellValue);
         int width = columnProperty.getWidth();
         /**
@@ -210,7 +210,7 @@ public class ExcelContext {
      * @param cellValue
      * @param isEndRow
      */
-    private void doContentRowColumnWidth(int cellNum, com.hotstrip.excel.ColumnProperty columnProperty, String cellValue, boolean isEndRow) {
+    private void doContentRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue, boolean isEndRow) {
         // 开始的处理逻辑和表头行一样
         int cellValueLength = DoExcelUtil.getValueLength(cellValue);
         int width = columnProperty.getWidth();
@@ -231,7 +231,7 @@ public class ExcelContext {
     private void addContentRows(List list) {
         for (int i = 0; i < list.size(); i++) {
             Row row = getNextRow();
-            for (com.hotstrip.excel.ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
+            for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
                 // 如果单元格样式没有设置
                 if (columnProperty.getCellStyle() == null) {
                     columnProperty.setCellStyle(this.workbook.createCellStyle());
@@ -272,7 +272,7 @@ public class ExcelContext {
      * @param cellValue
      * @return
      */
-    private Object doRewriteColumnValue(com.hotstrip.excel.ColumnProperty columnProperty, Object cellValue) {
+    private Object doRewriteColumnValue(ColumnProperty columnProperty, Object cellValue) {
         Object tempValue = cellValue;
         // 遍历集合匹配数据
         for (HashMap map : columnProperty.getRewritePropertyList()) {
@@ -369,7 +369,7 @@ public class ExcelContext {
 
     /**
      * 添加行数据
-     * @param list
+     * @param list 数据集合
      * @param localeFlag 是否需要国际化
      */
     public void addRow(List<Object> list, boolean localeFlag) {

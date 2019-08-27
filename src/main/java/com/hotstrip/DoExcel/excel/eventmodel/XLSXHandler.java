@@ -1,4 +1,4 @@
-package com.hotstrip.excel.eventmodel;
+package com.hotstrip.DoExcel.excel.eventmodel;
 
 import org.xml.sax.helpers.DefaultHandler;
 

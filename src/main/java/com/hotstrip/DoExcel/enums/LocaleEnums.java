@@ -1,4 +1,4 @@
-package com.hotstrip.enums;
+package com.hotstrip.DoExcel.enums;
 
 import java.util.Locale;
 
@@ -35,6 +35,11 @@ public enum LocaleEnums {
 
     /******************************************************/
 
+    /**
+     * 获取国际化资源类型
+     * @param value 国际化字符串类型
+     * @return java.util.Locale
+     */
     public static Locale getLocaleByValue(String value){
         Locale locale = Locale.SIMPLIFIED_CHINESE;
         for (LocaleEnums code : LocaleEnums.values()){

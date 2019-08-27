@@ -1,4 +1,4 @@
-package com.hotstrip.exception;
+package com.hotstrip.DoExcel.exception;
 
 public class DoExcelException extends RuntimeException {
     public DoExcelException(String message) {
