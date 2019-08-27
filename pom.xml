@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.idiotalex</groupId>
-    <artifactId>excel</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <artifactId>DoExcel</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>doExcel</name>
+    <name>DoExcel</name>
 
     <description>
         The tools for operate Excel
