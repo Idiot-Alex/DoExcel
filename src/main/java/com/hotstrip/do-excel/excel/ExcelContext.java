@@ -39,7 +39,7 @@ public class ExcelContext {
     private ExcelTypeEnums excelTypeEnums;
 
     // 表头
-    HeadRow headRow;
+    com.hotstrip.excel.HeadRow headRow;
 
     public ExcelContext(ExcelTypeEnums excelTypeEnums) {
         this.excelTypeEnums = excelTypeEnums;
@@ -108,11 +108,11 @@ public class ExcelContext {
         this.excelTypeEnums = excelTypeEnums;
     }
 
-    public HeadRow getHeadRow() {
+    public com.hotstrip.excel.HeadRow getHeadRow() {
         return headRow;
     }
 
-    public void setHeadRow(HeadRow headRow) {
+    public void setHeadRow(com.hotstrip.excel.HeadRow headRow) {
         this.headRow = headRow;
     }
 
@@ -137,10 +137,10 @@ public class ExcelContext {
      * @param clazz
      */
     private void addHeadRow(Class clazz){
-        this.headRow = new HeadRow(clazz);
+        this.headRow = new com.hotstrip.excel.HeadRow(clazz);
 
         Row row = getNextRow();
-        for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
+        for (com.hotstrip.excel.ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
             int cellNum = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
 
             // 获取国际化之后的值
@@ -181,7 +181,7 @@ public class ExcelContext {
      * @param columnProperty
      * @param cellValue
      */
-    private void doHeadRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue) {
+    private void doHeadRowColumnWidth(int cellNum, com.hotstrip.excel.ColumnProperty columnProperty, String cellValue) {
         int cellValueLength = DoExcelUtil.getValueLength(cellValue);
         int width = columnProperty.getWidth();
         /**
@@ -210,7 +210,7 @@ public class ExcelContext {
      * @param cellValue
      * @param isEndRow
      */
-    private void doContentRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue, boolean isEndRow) {
+    private void doContentRowColumnWidth(int cellNum, com.hotstrip.excel.ColumnProperty columnProperty, String cellValue, boolean isEndRow) {
         // 开始的处理逻辑和表头行一样
         int cellValueLength = DoExcelUtil.getValueLength(cellValue);
         int width = columnProperty.getWidth();
@@ -231,7 +231,7 @@ public class ExcelContext {
     private void addContentRows(List list) {
         for (int i = 0; i < list.size(); i++) {
             Row row = getNextRow();
-            for (ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
+            for (com.hotstrip.excel.ColumnProperty columnProperty : this.headRow.getColumnPropertyList()) {
                 // 如果单元格样式没有设置
                 if (columnProperty.getCellStyle() == null) {
                     columnProperty.setCellStyle(this.workbook.createCellStyle());
@@ -272,7 +272,7 @@ public class ExcelContext {
      * @param cellValue
      * @return
      */
-    private Object doRewriteColumnValue(ColumnProperty columnProperty, Object cellValue) {
+    private Object doRewriteColumnValue(com.hotstrip.excel.ColumnProperty columnProperty, Object cellValue) {
         Object tempValue = cellValue;
         // 遍历集合匹配数据
         for (HashMap map : columnProperty.getRewritePropertyList()) {

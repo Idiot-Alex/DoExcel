@@ -1,6 +1,5 @@
 package com.hotstrip.excel;
 
-import com.alibaba.fastjson.JSON;
 import com.hotstrip.annotation.Column;
 import com.hotstrip.annotation.ColumnEnum;
 import com.hotstrip.excel.util.Const;

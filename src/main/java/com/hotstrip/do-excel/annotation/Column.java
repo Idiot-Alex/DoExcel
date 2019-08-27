@@ -20,5 +20,5 @@ public @interface Column {
      * 然后资源文件对应 @ColumnEnum 的 value 属性即可
      * @return
      */
-    ColumnEnum[] columnEnums() default {};
+    com.hotstrip.annotation.ColumnEnum[] columnEnums() default {};
 }

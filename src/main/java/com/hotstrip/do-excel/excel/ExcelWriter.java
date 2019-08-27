@@ -10,10 +10,10 @@ import java.util.Locale;
  * Created by Administrator on 2019/7/29.
  */
 public class ExcelWriter {
-    private ExcelContext excelContext;
+    private com.hotstrip.excel.ExcelContext excelContext;
 
     public ExcelWriter(OutputStream outputStream, ExcelTypeEnums excelTypeEnums) {
-        excelContext = new ExcelContext(outputStream, excelTypeEnums);
+        excelContext = new com.hotstrip.excel.ExcelContext(outputStream, excelTypeEnums);
     }
 
     /**
