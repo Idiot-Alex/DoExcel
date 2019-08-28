@@ -1,8 +1,8 @@
 package model;
 
-import com.hotstrip.annotation.Column;
-import com.hotstrip.annotation.ColumnEnum;
-import com.hotstrip.annotation.DoSheet;
+import com.hotstrip.DoExcel.annotation.Column;
+import com.hotstrip.DoExcel.annotation.ColumnEnum;
+import com.hotstrip.DoExcel.annotation.DoSheet;
 
 import java.math.BigDecimal;
 import java.util.Date;

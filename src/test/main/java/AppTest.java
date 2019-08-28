@@ -1,6 +1,6 @@
-import com.hotstrip.enums.ExcelTypeEnums;
-import com.hotstrip.enums.LocaleEnums;
-import com.hotstrip.excel.ExcelWriter;
+import com.hotstrip.DoExcel.enums.ExcelTypeEnums;
+import com.hotstrip.DoExcel.enums.LocaleEnums;
+import com.hotstrip.DoExcel.excel.ExcelWriter;
 import model.ExcelAgent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +16,7 @@ public class AppTest {
 
     public static void main(String[] args) throws FileNotFoundException {
 
+        // 初始化数据
         List<ExcelAgent> list = new ArrayList<ExcelAgent>();
         for (int i = 0; i< 1000; i++) {
             ExcelAgent excelAgent = new ExcelAgent();
@@ -30,6 +31,7 @@ public class AppTest {
 
         long startTime = System.currentTimeMillis();
 
+        // row1 和 row2 表示单独写一行数据  这数据不是上面的集合数据
         List<Object> row1 = new ArrayList<Object>();
         List<Object> row2 = new ArrayList<Object>();
         int total = 0;
@@ -45,6 +47,7 @@ public class AppTest {
         row2.add("小数总计");
         row2.add(total1);
 
+        // 国际化语言类型
         Locale locale = LocaleEnums.getLocaleByValue("zh_cn");
 
         FileOutputStream fileOutputStream = new FileOutputStream("/Users/zhangxin/Desktop/test.xlsx");
