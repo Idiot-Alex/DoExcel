@@ -21,6 +21,7 @@ import java.util.*;
  * 导入工具类
  * @author Lius
  */
+@Deprecated
 public class ExcelImport {
 	private static Logger logger = LoggerFactory.getLogger(ExcelImport.class);
 
