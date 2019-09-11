@@ -288,7 +288,7 @@ public class ExcelContext {
     /**
      * 设置单元格值
      * 判断单元格数据类型
-     * 数值型 又分为 整数 小数
+     * 数值型 又分为 整数 小数 （数字长度超过 15 会丢失精度）
      * 文本型 百分比数值 时间格式化 也就是字符串
      * 日期时间型 需要格式化字符串
      * @param cell
@@ -305,10 +305,16 @@ public class ExcelContext {
         // 整数
         if (isNum && isPercent == false) {
             // 整数不显示小数
-            if (isInteger)
-                cellStyle.setDataFormat(dataFormat.getFormat("0"));
-            else
+            if (isInteger) {
+                // 如果整数长度大于 15 转换成文本
+                if (String.valueOf(cellValue).length() > 15) {
+                    cellStyle.setDataFormat(dataFormat.getFormat("@"));
+                } else {
+                    cellStyle.setDataFormat(dataFormat.getFormat("0"));
+                }
+            } else {
                 cellStyle.setDataFormat(dataFormat.getFormat("0.00"));
+            }
             // 设置样式
             cell.setCellStyle(cellStyle);
             cell.setCellValue(Double.parseDouble(cellValue.toString()));
