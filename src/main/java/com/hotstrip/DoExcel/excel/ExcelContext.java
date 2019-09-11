@@ -4,6 +4,7 @@ import com.hotstrip.DoExcel.annotation.DoSheet;
 import com.hotstrip.DoExcel.enums.ExcelTypeEnums;
 import com.hotstrip.DoExcel.excel.util.Const;
 import com.hotstrip.DoExcel.excel.util.DoExcelUtil;
+import com.hotstrip.DoExcel.excel.util.StringUtil;
 import com.hotstrip.DoExcel.exception.DoExcelException;
 import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
@@ -145,6 +146,8 @@ public class ExcelContext {
 
             // 获取国际化之后的值
             String cellValue = handleResourceBundle(columnProperty.getName());
+            // 移除首尾空格
+            cellValue = StringUtil.ltrim(StringUtil.rtrim(cellValue));
 
             // 设置单元格宽度 为 0 就设置自动适应表头
             doHeadRowColumnWidth(cellNum, columnProperty, cellValue);
@@ -182,7 +185,7 @@ public class ExcelContext {
      * @param cellValue
      */
     private void doHeadRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue) {
-        int cellValueLength = DoExcelUtil.getValueLength(cellValue);
+        int cellValueLength = StringUtil.getValueLength(cellValue);
         int width = columnProperty.getWidth();
         /**
          * 判断值的真正长度
@@ -212,7 +215,7 @@ public class ExcelContext {
      */
     private void doContentRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue, boolean isEndRow) {
         // 开始的处理逻辑和表头行一样
-        int cellValueLength = DoExcelUtil.getValueLength(cellValue);
+        int cellValueLength = StringUtil.getValueLength(cellValue);
         int width = columnProperty.getWidth();
         if (cellValueLength > width) {
             // 设置字段单元格长度
