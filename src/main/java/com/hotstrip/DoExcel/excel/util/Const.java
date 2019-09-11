@@ -1,7 +1,5 @@
 package com.hotstrip.DoExcel.excel.util;
 
-import com.sun.deploy.uitoolkit.impl.fx.ui.CertificateDialog;
-
 public class Const {
     // get String
     public static final String GET = "get";
