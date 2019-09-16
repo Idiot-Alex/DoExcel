@@ -312,28 +312,27 @@ public class ExcelContext {
                 // 如果整数长度大于 15 转换成文本
                 if (String.valueOf(cellValue).length() > 15) {
                     cellStyle.setDataFormat(dataFormat.getFormat("@"));
+                    cell.setCellValue(cellValue.toString());
                 } else {
                     cellStyle.setDataFormat(dataFormat.getFormat("0"));
+                    cell.setCellValue(Double.parseDouble(cellValue.toString()));
                 }
             } else {
                 cellStyle.setDataFormat(dataFormat.getFormat("0.00"));
+                cell.setCellValue(Double.parseDouble(cellValue.toString()));
             }
-            // 设置样式
-            cell.setCellStyle(cellStyle);
-            cell.setCellValue(Double.parseDouble(cellValue.toString()));
         } else {
             // 日期时间格式 JDK 1.8 之后的日期格式暂时没实现
             if (cellValue instanceof Date) {
                 cellStyle.setDataFormat(dataFormat.getFormat(Const.YMDHMS));
-                cell.setCellStyle(cellStyle);
                 cell.setCellValue((Date) cellValue);
             } else {
                 // 字符串
                 cellStyle.setDataFormat(dataFormat.getFormat("@"));
-                cell.setCellStyle(cellStyle);
                 cell.setCellValue(cellValue.toString());
             }
         }
+        cell.setCellStyle(cellStyle);
     }
 
     /**
