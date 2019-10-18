@@ -21,7 +21,7 @@ public class ExcelAgent {
     private Integer two;
     @Column(name = "three")
     private BigDecimal three;
-    @Column(name = "createTime")
+    @Column(name = "createTime", format = "YYYY-MM-dd HH:mm:ss")
     private Date createTime;
 
     public Long getAgentId() {

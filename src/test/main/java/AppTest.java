@@ -18,10 +18,13 @@ public class AppTest {
 
         // 初始化数据
         List<ExcelAgent> list = new ArrayList<ExcelAgent>();
-        for (int i = 0; i< 1000; i++) {
+        for (int i = 0; i< 100; i++) {
             ExcelAgent excelAgent = new ExcelAgent();
             excelAgent.setAgentCode("code" + i);
-            excelAgent.setAgentName("name" + i);
+            if (i % 9 == 0)
+                excelAgent.setAgentName("name----" + i);
+            else
+                excelAgent.setAgentName("name" + i);
             excelAgent.setAgentId(i * 10L);
             excelAgent.setTwo(i * 10);
             excelAgent.setThree(BigDecimal.valueOf(i).multiply(BigDecimal.valueOf(10.1)));

@@ -11,8 +11,10 @@ import java.util.List;
 public class ColumnProperty {
     // 字段
     private Field field;
-    // 名称
-    private String name;
+    // 字段值
+    private String value;
+    // 格式化之后的值
+    private String formatValue;
     // 字段 get 方法
     private Method getMethod;
     // 字段所在单元格最大宽度
@@ -30,12 +32,20 @@ public class ColumnProperty {
         this.field = field;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getFormatValue() {
+        return formatValue;
+    }
+
+    public void setFormatValue(String formatValue) {
+        this.formatValue = formatValue;
     }
 
     public Method getGetMethod() {

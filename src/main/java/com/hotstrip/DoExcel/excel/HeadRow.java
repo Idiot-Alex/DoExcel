@@ -36,7 +36,8 @@ public class HeadRow {
             if (column != null) {
                 // 设置字段的相关属性
                 columnProperty = new ColumnProperty();
-                columnProperty.setName(column.name());
+                columnProperty.setValue(column.name());
+                columnProperty.setFormatValue(column.format());
                 columnProperty.setField(field);
                 columnProperty.setGetMethod(getFieldMethod(clazz, field));
 

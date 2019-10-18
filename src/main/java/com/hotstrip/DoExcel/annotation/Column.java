@@ -21,4 +21,7 @@ public @interface Column {
      * @return array
      */
     ColumnEnum[] columnEnums() default {};
+
+    // 日期时间格式化
+    String format() default "";
 }

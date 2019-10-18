@@ -60,15 +60,6 @@ public class ExcelContext {
         this.locale = locale;
     }
 
-    public ResourceBundle getResourceBundle() {
-        return resourceBundle;
-    }
-
-    @Deprecated
-    public void setResourceBundle(ResourceBundle resourceBundle) {
-        this.resourceBundle = resourceBundle;
-    }
-
     public Sheet getCurrentSheet() {
         return currentSheet;
     }
@@ -145,7 +136,7 @@ public class ExcelContext {
             int cellNum = row.getLastCellNum() == -1 ? 0 : row.getLastCellNum();
 
             // 获取国际化之后的值
-            String cellValue = handleResourceBundle(columnProperty.getName());
+            String cellValue = handleResourceBundle(columnProperty.getValue());
             // 移除首尾空格
             cellValue = StringUtil.ltrim(StringUtil.rtrim(cellValue));
 
@@ -185,6 +176,7 @@ public class ExcelContext {
      * @param cellValue
      */
     private void doHeadRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue) {
+        // 计算 列字段值长度
         int cellValueLength = StringUtil.getValueLength(cellValue);
         int width = columnProperty.getWidth();
         /**
@@ -214,12 +206,17 @@ public class ExcelContext {
      * @param isEndRow
      */
     private void doContentRowColumnWidth(int cellNum, ColumnProperty columnProperty, String cellValue, boolean isEndRow) {
-        // 开始的处理逻辑和表头行一样
-        int cellValueLength = StringUtil.getValueLength(cellValue);
-        int width = columnProperty.getWidth();
-        if (cellValueLength > width) {
-            // 设置字段单元格长度
-            columnProperty.setWidth(cellValueLength);
+        // 若格式化字符串为空就计算真实值的长度
+        if (columnProperty.getFormatValue() == null || columnProperty.getFormatValue().length() == 0){
+            int cellValueLength = StringUtil.getValueLength(cellValue);
+            int width = columnProperty.getWidth();
+            if (cellValueLength > width) {
+                // 设置字段单元格长度
+                columnProperty.setWidth(cellValueLength);
+            }
+        } else {
+            // 计算格式化字符串的长度
+            columnProperty.setWidth(StringUtil.getValueLength(columnProperty.getFormatValue()));
         }
         // 如果是最后一行 设置单元格宽度
         if (isEndRow) {
@@ -264,7 +261,7 @@ public class ExcelContext {
                 // 处理单元格宽度
                 doContentRowColumnWidth(cellNum, columnProperty, cellValue.toString(), i == list.size() - 1);
 
-                fillCellValue(cell, columnProperty.getCellStyle(), cellValue);
+                fillCellValue(cell, columnProperty.getCellStyle(), cellValue, columnProperty.getFormatValue());
             }
         }
     }
@@ -297,8 +294,9 @@ public class ExcelContext {
      * @param cell
      * @param cellStyle
      * @param cellValue
+     * @param formatValue 日期格式化字符串
      */
-    private void fillCellValue(Cell cell, CellStyle cellStyle, Object cellValue) {
+    private void fillCellValue(Cell cell, CellStyle cellStyle, Object cellValue, String formatValue) {
         // 格式化
         DataFormat dataFormat = this.workbook.createDataFormat();
 
@@ -324,7 +322,10 @@ public class ExcelContext {
         } else {
             // 日期时间格式 JDK 1.8 之后的日期格式暂时没实现
             if (cellValue instanceof Date) {
-                cellStyle.setDataFormat(dataFormat.getFormat(Const.YMDHMS));
+                if (formatValue == null || formatValue.length() == 0)
+                    cellStyle.setDataFormat(dataFormat.getFormat(Const.YMDHMS));
+                else
+                    cellStyle.setDataFormat(dataFormat.getFormat(formatValue));
                 cell.setCellValue((Date) cellValue);
             } else {
                 // 字符串
@@ -398,7 +399,7 @@ public class ExcelContext {
                 cellValue = handleResourceBundle(cellValue.toString());
             }
 
-            fillCellValue(cell, cellStyle, cellValue);
+            fillCellValue(cell, cellStyle, cellValue, "");
         }
     }
 
