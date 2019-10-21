@@ -53,7 +53,8 @@ public class AppTest {
         // 国际化语言类型
         Locale locale = LocaleEnums.getLocaleByValue("zh_cn");
 
-        FileOutputStream fileOutputStream = new FileOutputStream("/Users/zhangxin/Desktop/test.xlsx");
+        FileOutputStream fileOutputStream = new FileOutputStream("F:\\test.xlsx");
+        // FileOutputStream fileOutputStream = new FileOutputStream("/Users/zhangxin/Desktop/test.xlsx");
         ExcelWriter excelWriter = new ExcelWriter(fileOutputStream, ExcelTypeEnums.XLSX);
 
         excelWriter.locale(locale)

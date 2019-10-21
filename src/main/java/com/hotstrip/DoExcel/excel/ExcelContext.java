@@ -100,14 +100,6 @@ public class ExcelContext {
         this.excelTypeEnums = excelTypeEnums;
     }
 
-    public HeadRow getHeadRow() {
-        return headRow;
-    }
-
-    public void setHeadRow(HeadRow headRow) {
-        this.headRow = headRow;
-    }
-
     /**
      * 添加数据
      * @param list java.util.List
@@ -161,7 +153,8 @@ public class ExcelContext {
             } catch (UnsupportedEncodingException e) {
 
             } catch (MissingResourceException e) {
-                logger.warn("the key [{}] is not match value", value);
+                if (logger.isDebugEnabled())
+                    logger.debug("the key [{}] is not match value", value);
             }
         }
         return value;
@@ -349,6 +342,7 @@ public class ExcelContext {
 
     /**
      * 添加 Sheet
+     * 主要处理表格标题和国际化资源配置
      * @param clazz
      */
     private void addSheet(Class clazz) {
