@@ -30,7 +30,7 @@ public class StringUtil {
      * @param s
      * @return
      */
-    public static String ltrim(String s) {
+    public static String lTrim(String s) {
         int i = 0;
         while (i < s.length() && Character.isWhitespace(s.charAt(i))) {
             i++;
@@ -43,7 +43,7 @@ public class StringUtil {
      * @param s
      * @return
      */
-    public static String rtrim(String s) {
+    public static String rTrim(String s) {
         int i = s.length()-1;
         while (i >= 0 && Character.isWhitespace(s.charAt(i))) {
             i--;

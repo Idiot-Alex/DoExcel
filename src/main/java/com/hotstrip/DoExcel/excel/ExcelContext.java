@@ -130,7 +130,7 @@ public class ExcelContext {
             // 获取国际化之后的值
             String cellValue = handleResourceBundle(columnProperty.getValue());
             // 移除首尾空格
-            cellValue = StringUtil.ltrim(StringUtil.rtrim(cellValue));
+            cellValue = StringUtil.lTrim(StringUtil.rTrim(cellValue));
 
             // 设置单元格宽度 为 0 就设置自动适应表头
             doHeadRowColumnWidth(cellNum, columnProperty, cellValue);
