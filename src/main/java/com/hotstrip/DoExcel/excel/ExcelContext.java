@@ -60,46 +60,6 @@ public class ExcelContext {
         this.locale = locale;
     }
 
-    public Sheet getCurrentSheet() {
-        return currentSheet;
-    }
-
-    public void setCurrentSheet(Sheet currentSheet) {
-        this.currentSheet = currentSheet;
-    }
-
-    public int getCurrentRowNum() {
-        return currentRowNum;
-    }
-
-    public void setCurrentRowNum(int currentRowNum) {
-        this.currentRowNum = currentRowNum;
-    }
-
-    public Workbook getWorkbook() {
-        return workbook;
-    }
-
-    public void setWorkbook(Workbook workbook) {
-        this.workbook = workbook;
-    }
-
-    public OutputStream getOutputStream() {
-        return outputStream;
-    }
-
-    public void setOutputStream(OutputStream outputStream) {
-        this.outputStream = outputStream;
-    }
-
-    public ExcelTypeEnums getExcelTypeEnums() {
-        return excelTypeEnums;
-    }
-
-    public void setExcelTypeEnums(ExcelTypeEnums excelTypeEnums) {
-        this.excelTypeEnums = excelTypeEnums;
-    }
-
     /**
      * 添加数据
      * @param list java.util.List
