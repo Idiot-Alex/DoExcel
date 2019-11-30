@@ -22,9 +22,12 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
     // 当前单元表下标
     private int sheetIndex = -1;
 
+    // 当前行号
+    private int currentRowNum;
+
     /**
      * 监听方法，处理 Record
-     * 关于 Record 的 sid 如下:
+     * 关于常用的 Record 的 sid 如下:
      * BoundSheetRecord: 记录了sheetName
      * BOFRecord: Workbook、Sheet 的开始
      * BlankRecord: 存在单元格样式的空单元格
@@ -35,13 +38,14 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
      * LabelSSTRecord: 共用的文本单元格
      * NumberRecord: 数值单元格：数字单元格和日期单元格
      * EOFRecord: Workbook、Sheet的结束
+     * RowRecord: 行记录
      * @param record
      */
     public void processRecord(Record record) {
         switch (record.getSid()){
             case BoundSheetRecord.sid:
                 BoundSheetRecord boundSheetRecord = (BoundSheetRecord) record;
-                logger.debug("current process workSheet is: [{}]", boundSheetRecord.getSheetname());
+                logger.info("current process workSheet is: [{}]", boundSheetRecord.getSheetname());
                 break;
             case BOFRecord.sid:
                 BOFRecord bofRecord = (BOFRecord) record;
@@ -64,6 +68,10 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
             case NumberRecord.sid:
                 break;
             case EOFRecord.sid:
+                break;
+            case RowRecord.sid:
+                RowRecord rowRecord = (RowRecord) record;
+                logger.info("rowNumber: [{}]...firstCol: [{}]...lastCol: [{}]", rowRecord.getRowNumber(), rowRecord.getFirstCol(), rowRecord.getLastCol());
                 break;
             default:
                 break;
