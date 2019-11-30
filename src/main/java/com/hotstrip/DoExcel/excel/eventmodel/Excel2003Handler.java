@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2019/7/29.
@@ -21,13 +19,8 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
 
     private POIFSFileSystem poifsFileSystem;
 
-    private List<BoundSheetRecord> boundSheetRecords = new ArrayList<BoundSheetRecord>();
-
     // 当前单元表下标
     private int sheetIndex = -1;
-
-    // 需要读取的单元表名称
-    private String sheetName;
 
     /**
      * 监听方法，处理 Record
@@ -45,56 +38,36 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
      * @param record
      */
     public void processRecord(Record record) {
-        if (isContinue()){
-            logger.info("record is: {}", record);
-            switch (record.getSid()){
-                case BoundSheetRecord.sid:
-                    this.boundSheetRecords.add((BoundSheetRecord) record);
-                    break;
-                case BOFRecord.sid:
-                    BOFRecord bofRecord = (BOFRecord) record;
-                    // 如果类型是 单元表，当前单元表下标 +1
-                    if (bofRecord.getType() == BOFRecord.TYPE_WORKSHEET)
-                        sheetIndex ++;
-                    break;
-                case BlankRecord.sid:
-                    break;
-                case BoolErrRecord.sid:
-                    break;
-                case FormulaRecord.sid:
-                    break;
-                case StringRecord.sid:
-                    break;
-                case LabelRecord.sid:
-                    break;
-                case LabelSSTRecord.sid:
-                    break;
-                case NumberRecord.sid:
-                    break;
-                case EOFRecord.sid:
-                    break;
-                default:
-                    break;
-            }
+        switch (record.getSid()){
+            case BoundSheetRecord.sid:
+                BoundSheetRecord boundSheetRecord = (BoundSheetRecord) record;
+                logger.debug("current process workSheet is: [{}]", boundSheetRecord.getSheetname());
+                break;
+            case BOFRecord.sid:
+                BOFRecord bofRecord = (BOFRecord) record;
+                // 如果类型是 单元表，当前单元表下标 +1
+                if (bofRecord.getType() == BOFRecord.TYPE_WORKSHEET)
+                    sheetIndex ++;
+                break;
+            case BlankRecord.sid:
+                break;
+            case BoolErrRecord.sid:
+                break;
+            case FormulaRecord.sid:
+                break;
+            case StringRecord.sid:
+                break;
+            case LabelRecord.sid:
+                break;
+            case LabelSSTRecord.sid:
+                break;
+            case NumberRecord.sid:
+                break;
+            case EOFRecord.sid:
+                break;
+            default:
+                break;
         }
-    }
-
-    /**
-     * 是否继续读取数据
-     * @return
-     */
-    private boolean isContinue(){
-        // 不指定读取单元表 返回true
-        if (this.sheetName == null){
-            return true;
-        }
-        // 单元表下标大于 -1 且 单元表标题记录存在 判断是否相等
-        if (this.sheetIndex > -1 && !this.boundSheetRecords.isEmpty()){
-            String currentSheetName = BoundSheetRecord.orderByBofPosition(this.boundSheetRecords)[this.sheetIndex].getSheetname();
-            logger.info("currentSheetName: {}...sheetName: {}", currentSheetName, this.sheetName);
-            return this.sheetName.equals(currentSheetName);
-        }
-        return true;
     }
 
     /**
