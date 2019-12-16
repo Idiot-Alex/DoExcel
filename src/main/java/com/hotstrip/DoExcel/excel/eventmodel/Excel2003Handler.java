@@ -1,6 +1,7 @@
 package com.hotstrip.DoExcel.excel.eventmodel;
 
-import com.alibaba.fastjson.JSON;
+import com.hotstrip.DoExcel.excel.reader.DefaultRowReaderListener;
+import com.hotstrip.DoExcel.excel.reader.IRowReaderListener;
 import org.apache.poi.hssf.eventusermodel.*;
 import org.apache.poi.hssf.eventusermodel.dummyrecord.LastCellOfRowDummyRecord;
 import org.apache.poi.hssf.eventusermodel.dummyrecord.MissingCellDummyRecord;
@@ -36,9 +37,14 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
     private SSTRecord sstRecord;
 
     // 当前行数据集
-    private List<String> rowList = new ArrayList<String>();
+    private List<String> rowData = new ArrayList<String>();
 
+    // 监听器
+    private IRowReaderListener rowReaderListener;
 
+    public void setRowReaderListenner(IRowReaderListener rowReaderListener) {
+        this.rowReaderListener = rowReaderListener;
+    }
 
     /**
      * 监听方法，处理 Record
@@ -70,7 +76,6 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
                 }
                 break;
             case BlankRecord.sid:
-                // BlankRecord blankRecord = (BlankRecord) record;
                 addFieldValue("");
                 break;
             case BoolErrRecord.sid:
@@ -113,14 +118,18 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
         }
         // 空值的操作
         if (record instanceof MissingCellDummyRecord) {
-            // MissingCellDummyRecord missingCellDummyRecord = (MissingCellDummyRecord) record;
             addFieldValue("");
         }
         // 如果是一行的最后一列
         if (record instanceof LastCellOfRowDummyRecord) {
-            // LastCellOfRowDummyRecord lastCellOfRowDummyRecord = (LastCellOfRowDummyRecord) record;
-            logger.info(JSON.toJSONString(this.rowList));
-            this.rowList.clear();
+            // 调用监听器
+            if (this.rowReaderListener == null) {
+                this.setRowReaderListenner(new DefaultRowReaderListener());
+            }
+            this.rowReaderListener.getRow(this.sheetIndex, this.currentRowNum, this.rowData);
+
+            // 清空数据
+            this.rowData.clear();
             // 行号自增
             this.currentRowNum++;
             // 列号设置为 0
@@ -130,7 +139,7 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
 
     // 添加字段值 修改当前列号
     private void addFieldValue(String value) {
-        this.rowList.add(this.currentColNum, value);
+        this.rowData.add(this.currentColNum, value);
         // 列号自增
         this.currentColNum++;
     }
@@ -153,7 +162,8 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
     }
 
     public static void main(String [] args) throws IOException {
-        FileInputStream fis = new FileInputStream("F:\\Excel2003.xls");
+//        FileInputStream fis = new FileInputStream("F:\\Excel2003.xls");
+        FileInputStream fis = new FileInputStream("/Users/zhangxin/Desktop/test.xls");
         ExcelHandler excelHandler = new Excel2003Handler();
         excelHandler.readSheet(fis);
     }
