@@ -27,8 +27,8 @@ public class StringUtil {
 
     /**
      * 去掉左边空格
-     * @param s
-     * @return
+     * @param s 字符串
+     * @return String
      */
     public static String lTrim(String s) {
         int i = 0;
@@ -40,8 +40,8 @@ public class StringUtil {
 
     /**
      * 去掉右边空格
-     * @param s
-     * @return
+     * @param s 字符串
+     * @return String
      */
     public static String rTrim(String s) {
         int i = s.length()-1;

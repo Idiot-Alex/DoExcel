@@ -53,12 +53,12 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
      * BOFRecord: Workbook、Sheet 的开始
      * BlankRecord: 存在单元格样式的空单元格
      * BoolErrRecord: 布尔或错误单元格
-     * FormulaRecord: 公式单元格 => 比如 =SUM(B1:B2)
-     * StringRecord: 公式的计算结果单元格 => 比如 =(B2)
+     * FormulaRecord: 公式单元格 比如 =SUM(B1:B2)
+     * StringRecord: 公式的计算结果单元格 比如 =(B2)
      * LabelSSTRecord: 共用的文本单元格
      * NumberRecord: 数值单元格：数字单元格和日期单元格
      * EOFRecord: Workbook、Sheet的结束
-     * @param record
+     * @param record 记录
      */
     public void processRecord(Record record) {
         switch (record.getSid()){
@@ -146,7 +146,7 @@ public class Excel2003Handler implements HSSFListener, ExcelHandler {
 
     /**
      * 处理单元表
-     * @param fileInputStream
+     * @param fileInputStream 文件输入流
      */
     public void readSheet(FileInputStream fileInputStream) throws IOException {
         // 输入流

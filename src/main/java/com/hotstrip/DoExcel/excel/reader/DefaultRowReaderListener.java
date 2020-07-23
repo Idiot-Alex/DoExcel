@@ -14,9 +14,9 @@ public class DefaultRowReaderListener implements IRowReaderListener {
 
     /**
      * 处理 Excel 行数据
-     * @param sheetIndex
-     * @param rowIndex
-     * @param rowData
+     * @param sheetIndex sheet 索引
+     * @param rowIndex 行索引
+     * @param rowData 数据行
      */
     public void getRow(int sheetIndex, int rowIndex, List<String> rowData) {
         logger.info("sheetIndex: {}...rowIndex: {}", sheetIndex, rowIndex);
